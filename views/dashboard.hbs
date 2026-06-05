@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href="/">Cap Deploy</a>
+        <nav class="nav">
+          <a class="nav-item is-active" href="/">Dashboard</a>
+          <a class="nav-item" href="/history">Deploy History</a>
+        </nav>
+      </aside>
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Jenkins-inspired deploy center</p>
+            <h1>Deploy Dashboard</h1>
+          </div>
+          <a class="button secondary" href="/history">View history</a>
+        </header>
+
+        <section class="summary-grid">
+          <div class="metric">
+            <span class="metric-label">Projects</span>
+            <strong>{{projects.length}}</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Running</span>
+            <strong>1</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Targets</span>
+            <strong>SSH</strong>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>Pipeline Jobs</h2>
+            <span class="muted">Select a project to deploy with parameters</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th>Repository</th>
+                  <th>Default Branch</th>
+                  <th>Last Status</th>
+                  <th>Last Run</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each projects}}
+                  <tr>
+                    <td>
+                      <strong>{{name}}</strong>
+                      <span class="subtext">{{environments.length}} environments</span>
+                    </td>
+                    <td><code>{{repository}}</code></td>
+                    <td>{{defaultBranch}}</td>
+                    <td><span class="status {{statusLabel}}">{{statusLabel}}</span></td>
+                    <td>
+                      {{#if lastRun}}
+                        <a href="/deploys/{{lastRun.id}}">{{lastRun.id}}</a>
+                      {{else}}
+                        <span class="muted">No runs</span>
+                      {{/if}}
+                    </td>
+                    <td><a class="button compact" href="/projects/{{id}}">Deploy</a></td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

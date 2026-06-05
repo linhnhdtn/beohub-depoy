@@ -1,0 +1,10 @@
+node_modules/
+dist/
+beohub/
+.idea/
+.agents/
+.codex/
+
+.env
+.env.*
+*.log

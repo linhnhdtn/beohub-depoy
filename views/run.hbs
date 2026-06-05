@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href="/">Cap Deploy</a>
+        <nav class="nav">
+          <a class="nav-item" href="/">Dashboard</a>
+          <a class="nav-item is-active" href="/history">Deploy History</a>
+        </nav>
+      </aside>
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">{{run.project.name}} / {{run.branch}} / {{run.environment}}</p>
+            <h1>{{run.id}}</h1>
+          </div>
+          <span class="status large {{run.status}}">{{run.status}}</span>
+        </header>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>Stage View</h2>
+            <span class="muted">Checkout to health check</span>
+          </div>
+          <div class="stages">
+            {{#each run.stages}}
+              <div class="stage {{status}}">
+                <span class="stage-dot"></span>
+                <strong>{{name}}</strong>
+                <span>{{duration}}</span>
+              </div>
+            {{/each}}
+          </div>
+        </section>
+
+        <section class="detail-grid">
+          <div class="panel">
+            <div class="panel-heading">
+              <h2>Run Parameters</h2>
+            </div>
+            <dl class="details">
+              <dt>Project</dt><dd>{{run.project.name}}</dd>
+              <dt>Branch</dt><dd>{{run.branch}}</dd>
+              <dt>Environment</dt><dd>{{run.environment}}</dd>
+              <dt>Commit</dt><dd>{{run.commit}}</dd>
+              <dt>Requested by</dt><dd>{{run.requestedBy}}</dd>
+            </dl>
+          </div>
+
+          <div class="panel">
+            <div class="panel-heading">
+              <h2>Options</h2>
+            </div>
+            <div class="option-list">
+              <span class="chip">Migrations: {{run.options.migrations}}</span>
+              <span class="chip">Clear cache: {{run.options.clearCache}}</span>
+              <span class="chip">Dry run: {{run.options.dryRun}}</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>Console Output</h2>
+            <span class="muted">Mock log stream</span>
+          </div>
+          <div class="console">
+            {{#each run.logs}}
+              <div class="log-line {{level}}">
+                <span>{{time}}</span>
+                <span>[{{stage}}]</span>
+                <span>{{level}}</span>
+                <span>{{message}}</span>
+              </div>
+            {{/each}}
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

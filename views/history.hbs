@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href="/">Cap Deploy</a>
+        <nav class="nav">
+          <a class="nav-item" href="/">Dashboard</a>
+          <a class="nav-item is-active" href="/history">Deploy History</a>
+        </nav>
+      </aside>
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">All mock deploy runs</p>
+            <h1>Deploy History</h1>
+          </div>
+          <a class="button secondary" href="/">Dashboard</a>
+        </header>
+
+        <section class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Run</th>
+                  <th>Project</th>
+                  <th>Branch</th>
+                  <th>Environment</th>
+                  <th>Status</th>
+                  <th>Requested By</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each runs}}
+                  <tr>
+                    <td><a href="/deploys/{{id}}">{{id}}</a></td>
+                    <td>{{projectId}}</td>
+                    <td>{{branch}}</td>
+                    <td>{{environment}}</td>
+                    <td><span class="status {{status}}">{{status}}</span></td>
+                    <td>{{requestedBy}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

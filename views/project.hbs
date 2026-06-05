@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script defer src="/app.js"></script>
+  </head>
+  <body>
+    <div class="single-page">
+      <main class="content narrow">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">{{project.repository}}</p>
+            <h1>{{project.name}} Deploy</h1>
+          </div>
+          {{#if selectedRun}}
+            <span class="status large {{selectedRun.status}}">{{selectedRun.status}}</span>
+          {{/if}}
+        </header>
+
+        <section class="stack">
+          <form class="panel deploy-form" method="post" action="/deploys" data-confirm-deploy>
+            <div class="panel-heading">
+              <h2>Start Deploy</h2>
+              <span class="muted">Clone, sync, build, publish, and restart PM2 locally</span>
+            </div>
+            <input type="hidden" name="projectId" value="{{project.id}}" />
+
+            <label>
+              Branch
+              <input name="branch" value="{{project.defaultBranch}}" placeholder="main" required />
+            </label>
+
+            <div class="fixed-field">
+              <span>Deploy directory</span>
+              <code>/home/ziczac/beohub</code>
+            </div>
+
+            <button class="button" type="submit">Start Deploy</button>
+          </form>
+
+          {{#if selectedRun}}
+            <section class="panel" id="console">
+              <div class="panel-heading">
+                <div>
+                  <h2>Console Output</h2>
+                  <span class="muted">{{selectedRun.id}} / {{selectedRun.branch}} / {{selectedRun.deployPath}}</span>
+                </div>
+              </div>
+
+              <div class="stages compact-stages">
+                {{#each selectedRun.stages}}
+                  <div class="stage {{status}}">
+                    <span class="stage-dot"></span>
+                    <strong>{{name}}</strong>
+                    <span>{{duration}}</span>
+                  </div>
+                {{/each}}
+              </div>
+
+              <div class="console inline-console">
+                {{#each selectedRun.logs}}
+                  <div class="log-line {{level}}">
+                    <span>{{time}}</span>
+                    <span>[{{stage}}]</span>
+                    <span>{{level}}</span>
+                    <span>{{message}}</span>
+                  </div>
+                {{/each}}
+              </div>
+            </section>
+          {{else}}
+            <div class="empty-console" id="console">
+              Console output will appear here after you start a deploy.
+            </div>
+          {{/if}}
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
